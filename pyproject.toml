@@ -1,0 +1,9 @@
+[project]
+name = "kafka-python-example"
+version = "0.1.0"
+description = "Example using kafka-python"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "kafka-python>=2.2.10",
+]
