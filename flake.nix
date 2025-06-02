@@ -14,8 +14,12 @@
         buildInputs = with pkgs; [
           python3Full
           uv
+          kcat
+          inetutils
         ];
         shellHook = ''
+          alias compose="docker compose"
+          
           uv sync
           source .venv/bin/activate
           echo "Development environment for kafka-python-example is ready!"

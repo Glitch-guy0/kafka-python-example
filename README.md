@@ -8,7 +8,6 @@ Welcome to my learning journey with **kafka-python**! This repository documents 
 
 - [ ] Create a consumer that subscribes to two different topics
 - [ ] Implement a producer script
-- [ ] Build a gateway for load balancing between consumers
 - [ ] Enhance the producer to send custom messages
 - [ ] Set up performance testing for producer and consumer
 
@@ -32,7 +31,7 @@ Kafka's design allows you to scale consumers horizontally. By running multiple c
 
 ### Running the Consumer with Docker Compose
 
-This command starts the full stack, which runs Nginx (as a gateway), the consumer services, and Kafka itself.
+This command starts the full stack, the consumer services, and Kafka itself.
 
 ```bash
 docker-compose up -d
