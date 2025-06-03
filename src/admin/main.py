@@ -1,11 +1,11 @@
-from kafka.admin import new_topic, KafkaAdminClient
+from kafka.admin import NewTopic, KafkaAdminClient
 from kafka.errors import TopicAlreadyExistsError
 
 
 try:
     print("Connecting to Kafka as Admin...")
     kafka = KafkaAdminClient(
-        bootstrap_servers='192.168.29.55:9092',
+        bootstrap_servers='localhost:9092',
         client_id='admin_client'
     )
     print("Connected to Kafka successfully.")
@@ -14,14 +14,14 @@ except Exception as e:
     exit(1)
 
 print("Creating topics...")
-help1 = new_topic.NewTopic(
+help1 = NewTopic(
     name='help1',
-    num_partitions=1,
+    num_partitions=2,
     replication_factor=1
 )
-help2 = new_topic.NewTopic(
+help2 = NewTopic(
     name='help2',
-    num_partitions=1,
+    num_partitions=2,
     replication_factor=1
 )
 try:

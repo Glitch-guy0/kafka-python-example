@@ -16,11 +16,14 @@
           uv
           kcat
           inetutils
+          docker-compose
+          docker
         ];
         shellHook = ''
           alias compose="docker compose"
           
           uv sync
+          echo "activating virtual environment..."
           source .venv/bin/activate
           echo "Development environment for kafka-python-example is ready!"
         '';
