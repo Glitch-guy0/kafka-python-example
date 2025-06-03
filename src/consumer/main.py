@@ -1,12 +1,14 @@
 from kafka import KafkaConsumer
+import os
 
 try:
     consumer = KafkaConsumer(
-        'help1',
-        bootstrap_servers='localhost:9092',
-        max_poll_records = 100,
-        value_deserializer=lambda x: x.decode('ascii'),
-        auto_offset_reset='earliest'#,'smallest'
+        "help1",
+        group_id="help1_group",
+        bootstrap_servers="localhost:9092",
+        max_poll_records=100,
+        value_deserializer=lambda x: x.decode("ascii"),
+        auto_offset_reset="earliest",  # ,'smallest',
     )
 
     if not consumer.bootstrap_connected():
@@ -21,16 +23,17 @@ try:
 
     while True:
         for message in consumer:
-            print(f"Received message: {message.value} from topic: {message.topic} at offset: {message.offset}")
+            print(
+                f"Received message: {message.value} \nfrom topic: {message.topic} \nat offset: {message.offset}"
+            )
             # Process the message as needed
-        
+
 except Exception as e:
     print(f"Error in Kafka consumer: {e}")
     exit(1)
 finally:
-    if 'consumer' in locals():
+    if "consumer" in locals():
         consumer.close()
         print("Kafka Consumer closed successfully.")
     else:
         print("Consumer was not initialized.")
-

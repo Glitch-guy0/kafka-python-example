@@ -1,25 +1,8 @@
-# kafka-python
+# kafka-python-example
 
-Welcome to my learning journey with **kafka-python**! This repository documents my exploration of using [Apache Kafka](https://kafka.apache.org/) with Python.
+This repository demonstrates using [Apache Kafka](https://kafka.apache.org/) with Python via the [kafka-python](https://github.com/dpkp/kafka-python) client.
 
-## Overview
-
-## TODO List
-
-- [ ] Create a consumer that subscribes to two different topics
-- [ ] Implement a producer script
-- [ ] Enhance the producer to send custom messages
-- [ ] Set up performance testing for producer and consumer
-
-## Making Consumers Scalable
-
-Kafka's design allows you to scale consumers horizontally. By running multiple consumer instances (either as separate containers or processes), you can distribute the workload of processing messages from a topic. Each consumer in the same consumer group will automatically receive a subset of the messages, enabling parallel processing and improved throughput. To scale, simply start more consumer containers or processes—Kafka will handle partition assignment and load balancing.
-
-## What is kafka-python?
-
-[kafka-python](https://github.com/dpkp/kafka-python) is a Python client for Apache Kafka, a distributed streaming platform. It allows Python applications to publish and consume messages from Kafka topics.
-
-## Getting Started
+## Quick Start
 
 ### Prerequisites
 
@@ -27,41 +10,52 @@ Kafka's design allows you to scale consumers horizontally. By running multiple c
 - [docker-compose](https://docs.docker.com/compose/)
 - Python 3.x
 
-## Usage
+### Steps to Run the Project
 
-### Running the Consumer with Docker Compose
+1. **Start Kafka and Zookeeper using Docker Compose:**
+    ```bash
+    docker-compose up -d
+    ```
 
-This command starts the full stack, the consumer services, and Kafka itself.
+2. **Initialize Kafka topics and partitions# kafka-python-example
 
-```bash
-docker-compose up -d
-```
+This repository demonstrates using [Apache Kafka](https://kafka.apache.org/) with Python via the [kafka-python](https://github.com/dpkp/kafka-python) client.
 
-### Producer
+## Quick Start
 
-Run the producer script to send messages to a topic:
+### Prerequisites
 
-```bash
-python producer.py
-```
+- [Docker](https://www.docker.com/get-started)
+- [docker-compose](https://docs.docker.com/compose/)
+- Python 3.x
 
-## Key Concepts
+### Steps to Run the Project
 
-- **Producer**: Sends messages to Kafka topics.
-- **Consumer**: Reads messages from Kafka topics.
-- **Topic**: A named stream of records.
+1. **Start Kafka using Docker Compose:**
+    ```bash
+    docker-compose up -d
+    ```
 
-## Resources
+2. **Initialize Kafka topics and partitions:**
+    ```bash
+    python src/admin/main.py
+    ```
 
-- [Kafka Concepts](https://kafka.apache.org/documentation/#intro_concepts)
+3. **Run Consumers:**
+    - The consumer code is in `src/consumer/main.py`.
+    - By default, a single consumer group instance is used.
+    - You can run up to 3 consumer instances for parallel processing:
+      ```bash
+      python src/consumer/main.py
+      # In separate terminals, run up to 2 more times for max 3 consumers
+      ```
 
-## My Learning Notes
-
-- Docker Compose makes it easy to set up Kafka locally.
-- Multiple consumers can read from the same topic, demonstrating Kafka's scalability.
-- kafka-python provides a simple API for both producing and consuming messages.
+4. **Run Producer to send messages:**
+    ```bash
+    python src/producer/main.py
+    ```
+    - The producer sends string messages to the consumer.
 
 ---
 
 Happy learning!
-
