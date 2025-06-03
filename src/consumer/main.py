@@ -1,35 +1,36 @@
 from kafka import KafkaConsumer
-import time
 
 try:
     consumer = KafkaConsumer(
-        'help1',  # Specify the topic to consume
-        bootstrap_servers=['localhost:9092'],
-        auto_offset_reset='earliest',
-        enable_auto_commit=True,
-        group_id='my-group',
-        heartbeat_interval_ms=  10000,
-        session_timeout_ms=30000,
-        consumer_timeout_ms=30000,
-        value_deserializer=lambda x: x.decode('utf-8'),
-        key_deserializer=lambda x: x.decode('utf-8') if x else None,
+        'help1',
+        bootstrap_servers='localhost:9092',
+        max_poll_records = 100,
+        value_deserializer=lambda x: x.decode('ascii'),
+        auto_offset_reset='earliest'#,'smallest'
     )
 
-    if consumer.bootstrap_connected():
-        print("connected to server")
-
-    # consumer.subscribe(topics=['help1'])
-    while not consumer.assignment():
-        print("Waiting for partition assignment...")
-        time.sleep(2)
-
+    if not consumer.bootstrap_connected():
+        raise Exception("Failed to connect to Kafka server")
+    print("Connected to Kafka successfully.")
+    if not consumer.topics():
+        raise Exception("No topics found. Please ensure the topic exists.")
+    print(f"Subscribed to topics: {consumer.topics()}")
+    if not consumer.subscription():
+        raise Exception("No subscription found. Please ensure the topic is subscribed.")
+    print(f"Current subscription: {consumer.subscription()}")
 
     while True:
-        for message in consumer.poll(timeout_ms=1000).values():
-            for record in message:
-                print(f"Received message: {record.value.decode('utf-8')}")
-        time.sleep(2)
-
-    consumer.close()
+        for message in consumer:
+            print(f"Received message: {message.value} from topic: {message.topic} at offset: {message.offset}")
+            # Process the message as needed
+        
 except Exception as e:
     print(f"Error in Kafka consumer: {e}")
+    exit(1)
+finally:
+    if 'consumer' in locals():
+        consumer.close()
+        print("Kafka Consumer closed successfully.")
+    else:
+        print("Consumer was not initialized.")
+
